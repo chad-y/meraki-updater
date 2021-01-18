@@ -87,7 +87,7 @@ def writeToFile(data):
         # this was the original
         # with open(outputFile,'w') as output:
         with open(outputFile,'w',newline="") as output:
-            writer = csv.DictWriter(output,fieldnames=['serial','name','tags','lat','lng','address','mac','model','network_id'],extrasaction='ignore')
+            writer = csv.DictWriter(output,fieldnames=['serial','name','tags','notes','lat','lng','address','mac','model','network_id'],extrasaction='ignore')
             writer.writeheader()
             for row in data:
                 writer.writerow(row)
@@ -103,7 +103,8 @@ def updateDevices():
                 options = {
                         'serial':row['serial'],
                         'name':row['name'],
-                        'tags': row['tags'],
+                        'tags': row['tags'].split(','),
+                        'notes': row['notes'],
                         'lat': row['lat'],
                         'lng': row['lng'],
                         'address': row['address']
@@ -131,6 +132,8 @@ def updateDevices():
                     payload['name'] = options['name']
                 if options['tags']:
                     payload['tags'] = options['tags']
+                if options['notes']:
+                    payload['notes'] = options['notes']
                 if options['lat']:
                     payload['lat'] = options['lat']
                 if options['lng']:
