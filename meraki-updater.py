@@ -17,6 +17,12 @@ Usage:
     -g/--get            Get network devices from all networks and write them to CSV
     -m/--multinetwork   Update devices across multiple networks using a CSV
     -v/--ver/--version  Display the version of this script
+
+  CSV file:
+    When working with the tags field in the CSV, use a comma to separate each tag.
+    As an example, if you want Alpha and Bravo as the tag, in the CSV field you would enter:
+        Alpha,Bravo
+    No spaces or extra characters needed.
 """
 
 from __future__ import print_function
@@ -24,7 +30,7 @@ import os,sys,getopt,csv,json,requests
 from os.path import expanduser
 from time import sleep
 
-# Version 2.0
+# Version 1.2
 # Moved api_url to api/v1
 version = 1.2
 ver = sys.version_info[0] > 2
@@ -143,6 +149,7 @@ def updateDevices():
                 payload['mac'] = d['mac']
                 payload['serial'] = options['serial']
                 data = json.dumps(payload)
+                print(data)
                 try:
                     r = requests.put(url,headers=headers, data=data)
                     if r.status_code == 200:
