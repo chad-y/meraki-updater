@@ -83,7 +83,10 @@ def getNetworkDevices(net,addNetID=False):
 def writeToFile(data):
     print('Writing to {}...'.format(outputFile))
     try:
-        with open(outputFile,'w') as output:
+        # changed to add with open(outputFile,'w',newline='') as outfile
+        # this was the original
+        # with open(outputFile,'w') as output:
+        with open(outputFile,'w',newline="") as output:
             writer = csv.DictWriter(output,fieldnames=['serial','name','tags','lat','lng','address','mac','model','network_id'],extrasaction='ignore')
             writer.writeheader()
             for row in data:
