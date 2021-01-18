@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Usage: 
+Usage:
   Update devices in a single network from CSV:
     meraki-updater.py -k <MERAKI-PROVISIONING-API-KEY> -f <CSV-UPDATE-FILE>
 
@@ -24,7 +24,9 @@ import os,sys,getopt,csv,json,requests
 from os.path import expanduser
 from time import sleep
 
-version = 1.1
+# Version 2.0
+# Moved api_url to api/v1
+version = 1.2
 ver = sys.version_info[0] > 2
 
 multiNetUpdate = False
@@ -36,7 +38,9 @@ outputFile = None
 organization = None
 headers = None
 dashboard_url = 'https://dashboard.meraki.com/'
-api_url = dashboard_url + 'api/v0/'
+
+# Used to be /v0/
+api_url = dashboard_url + 'api/v1/'
 
 class Usage(Exception):
     def __init__(self,msg):
@@ -245,7 +249,7 @@ def parseOptions(argv):
         except Exception as exc:
             return usage('Error initializaing. {}'.format(str(exc)))
     return 1
-            
+
 
 def main(argv=None):
     global organization
